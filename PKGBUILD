@@ -45,7 +45,7 @@ StartupNotify=true
 EOF
 
   # Icon images
-  mkdir -p "$pkgdir/usr/share/"
+  install -dm755 "$pkgdir/usr/share/"
   cp -a "$srcdir/squashfs-root/usr/share/icons" "$pkgdir/usr/share/"
 
   # wrapper script
@@ -59,10 +59,10 @@ EOF
   install -Dm755 "$srcdir/squashfs-root/usr/bin/anymex" "$pkgdir/usr/bin/$pkgname.bin"
 
   # data
-  mkdir -p "$pkgdir/usr/share/$pkgname/"
+  install -dm755 "$pkgdir/usr/share/$pkgname/"
   cp -a $srcdir/squashfs-root/usr/bin/data/* "$pkgdir/usr/share/$pkgname/"
 
   # lib
-  mkdir -p "$pkgdir/usr/lib/$pkgname/"
+  install -dm755 "$pkgdir/usr/lib/$pkgname/"
   cp -a $srcdir/squashfs-root/usr/bin/lib/* "$pkgdir/usr/lib/$pkgname/"
 }
