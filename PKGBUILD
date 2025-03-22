@@ -30,7 +30,8 @@ depends=(
 )
 conflicts=(anymex)
 _appimage="$_PkgName-$pkgver.AppImage"
-source=($_appimage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage)
+source=("$_appimage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage"
+  "LICENSE.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/heads/main/LICENSE.md")
 noextract=($_appimage)
 sha256sums=('a177b936d7a061c2acf64caff40402b258ee4af277ab3b1e3f34bc2eac6f1f88')
 
@@ -47,6 +48,10 @@ build() {
 }
 
 package() {
+  # license
+  install -Dm644 "$srcdir/LICENSE.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
+
+  # application
   install -dm755 "$pkgdir/usr/"
   mv "$srcdir"/squashfs-root/usr/* "$pkgdir/usr/"
 

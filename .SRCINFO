@@ -24,6 +24,7 @@ pkgbase = anymex-bin
 	conflicts = anymex
 	noextract = AnymeX-2.9.3_hotfix.AppImage
 	source = AnymeX-2.9.3_hotfix.AppImage::https://github.com/RyanYuuki/AnymeX/releases/download/v2.9.3-hotfix/AnymeX-Linux.AppImage
+	source = LICENSE.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/heads/main/LICENSE.md
 	sha256sums = a177b936d7a061c2acf64caff40402b258ee4af277ab3b1e3f34bc2eac6f1f88
 
 pkgname = anymex-bin
