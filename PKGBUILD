@@ -9,7 +9,7 @@ arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
 license=(MIT)
-depends=(mpv)
+depends=(mpv) # not sure if that's all
 provides=("$pkgname=$pkgver")
 conflicts=(anymex)
 _appimage=$_PkgName.AppImage
@@ -59,10 +59,10 @@ EOF
   install -Dm755 "$srcdir/squashfs-root/usr/bin/anymex" "$pkgdir/usr/bin/$pkgname.bin"
 
   # data
-  install -dm755 "$pkgdir/usr/share/$pkgname/"
-  cp -a $srcdir/squashfs-root/usr/bin/data/* "$pkgdir/usr/share/$pkgname/"
+  install -dm755 "$pkgdir/usr/bin/data/"
+  mv $srcdir/squashfs-root/usr/bin/data/* "$pkgdir/usr/bin/data/" # using /usr/share/anymex doesnt work
 
   # lib
-  install -dm755 "$pkgdir/usr/lib/$pkgname/"
-  cp -a $srcdir/squashfs-root/usr/bin/lib/* "$pkgdir/usr/lib/$pkgname/"
+  install -dm755 "$pkgdir/usr/bin/lib/"
+  mv $srcdir/squashfs-root/usr/bin/lib/* "$pkgdir/usr/bin/lib/" # using /usr/lib/anymex doesnt work
 }
