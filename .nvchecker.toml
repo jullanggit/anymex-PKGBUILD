@@ -1,0 +1,4 @@
+[anymex-bin]
+source = "git"
+git = "https://github.com/RyanYuuki/AnymeX.git"
+prefix = "v"
