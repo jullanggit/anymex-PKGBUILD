@@ -28,21 +28,21 @@ build() {
 
 package() {
   # Desktop file
-  install -Dm644 "${srcdir}/squashfs-root/${_pkgname}.desktop" \
-    "${pkgdir}/usr/share/applications/${_pkgname}.desktop"
+  install -Dm644 "${srcdir}/squashfs-root/${pkgname}.desktop" \
+    "${pkgdir}/usr/share/applications/${pkgname}.desktop"
 
   # Icon images
-  install -dm755 "${pkgdir}/usr/share/"
+  mkdir -p "${pkgdir}/usr/share/"
   cp -a "${srcdir}/squashfs-root/usr/share/icons" "${pkgdir}/usr/share/"
 
   # binary
   install -Dm755 "$srcdir/squashfs-root/usr/bin/anymex" "$pkgdir/usr/bin/$pkgname"
 
   # data
-  install -Dm644 "$pkgdir/usr/share/$pkgname/"
-  cp -a "$srcdir/squashfs-root/usr/bin/data/*" "${pkgdir}/usr/share/$pkgname/"
+  mkdir -p "$pkgdir/usr/share/$pkgname/"
+  cp -a $srcdir/squashfs-root/usr/bin/data/* "${pkgdir}/usr/share/$pkgname/"
 
   # lib
-  install -Dm644 "$pkgdir/usr/lib/$pkgname/"
-  cp -a "$srcdir/squashfs-root/usr/bin/lib/*" "${pkgdir}/usr/lib/$pkgname/"
+  mkdir -p "$pkgdir/usr/lib/$pkgname/"
+  cp -a $srcdir/squashfs-root/usr/bin/lib/* "${pkgdir}/usr/lib/$pkgname/"
 }
