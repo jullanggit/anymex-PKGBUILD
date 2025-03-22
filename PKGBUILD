@@ -9,6 +9,7 @@ arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
 license=(MIT)
+depends=(mpv)
 provides=("$pkgname=$pkgver")
 conflicts=(anymex)
 _appimage=$_PkgName.AppImage
