@@ -1,3 +1,4 @@
+# Based off of: https://daveparrish.net/posts/2019-11-16-Better-AppImage-PKGBUILD-template.html
 # Maintainer: jullanggit <jullanggit@proton.me>
 
 pkgname=anymex
@@ -10,17 +11,38 @@ url="https://github.com/RyanYuuki/${_PkgName}"
 license=(MIT)
 provides=("${pkgname}=${pkgver}")
 conflicts=(anymex)
-source=($_PkgName.AppImage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage)
+_appimage=$_PkgName.AppImage
+source=($_appimage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage)
+noextract=($_appimage)
 b2sums=('SKIP')
 
-package() {
-  # binary
-  install -Dm755 "$srcdir/anymex" "$pkgdir/usr/bin/$pkgname"
+prepare() {
+  chmod +x "${_appimage}"
+  ./"${_appimage}" --appimage-extract
+}
 
-  # lib
-  install -Dm755 "$pkgdir/usr/lib/$pkgname/"
-  cp
+build() {
+  # Fix permissions; .AppImage permissions are 700 for all directories
+  chmod -R a-x+rX squashfs-root/usr
+}
+
+package() {
+  # Desktop file
+  install -Dm644 "${srcdir}/squashfs-root/${_pkgname}.desktop" \
+    "${pkgdir}/usr/share/applications/${_pkgname}.desktop"
+
+  # Icon images
+  install -dm755 "${pkgdir}/usr/share/"
+  cp -a "${srcdir}/squashfs-root/usr/share/icons" "${pkgdir}/usr/share/"
+
+  # binary
+  install -Dm755 "$srcdir/squashfs-root/usr/bin/anymex" "$pkgdir/usr/bin/$pkgname"
 
   # data
-  install -Dm755 "$pkgdir/usr/share/$pkgname/"
+  install -Dm644 "$pkgdir/usr/share/$pkgname/"
+  cp -a "$srcdir/squashfs-root/usr/bin/data/*" "${pkgdir}/usr/share/$pkgname/"
+
+  # lib
+  install -Dm644 "$pkgdir/usr/lib/$pkgname/"
+  cp -a "$srcdir/squashfs-root/usr/bin/lib/*" "${pkgdir}/usr/lib/$pkgname/"
 }
