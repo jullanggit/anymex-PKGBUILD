@@ -1,0 +1,15 @@
+pkgbase = anymex
+	pkgdesc = An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)
+	pkgver = 2.9.3_hotfix
+	pkgrel = 3
+	url = https://github.com/RyanYuuki/AnymeX
+	arch = x86_64
+	license = MIT
+	depends = mpv
+	provides = anymex=2.9.3_hotfix
+	conflicts = anymex
+	noextract = AnymeX.AppImage
+	source = AnymeX.AppImage::https://github.com/RyanYuuki/AnymeX/releases/download/v2.9.3-hotfix/AnymeX-Linux.AppImage
+	b2sums = SKIP
+
+pkgname = anymex
