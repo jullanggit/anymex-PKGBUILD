@@ -1,15 +1,29 @@
-pkgbase = anymex
+pkgbase = anymex-bin
 	pkgdesc = An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)
 	pkgver = 2.9.3_hotfix
-	pkgrel = 3
+	pkgrel = 4
 	url = https://github.com/RyanYuuki/AnymeX
 	arch = x86_64
 	license = MIT
+	depends = libepoxy
+	depends = gdk-pixbuf2
+	depends = pango
+	depends = webkit2gtk-4.1
+	depends = harfbuzz
+	depends = libsoup3
+	depends = glibc
+	depends = fontconfig
+	depends = cairo
+	depends = hicolor-icon-theme
+	depends = glib2
+	depends = gcc-libs
 	depends = mpv
-	provides = anymex=2.9.3_hotfix
+	depends = zlib-ng-compat
+	depends = gtk3
+	depends = at-spi2-core
 	conflicts = anymex
-	noextract = AnymeX.AppImage
-	source = AnymeX.AppImage::https://github.com/RyanYuuki/AnymeX/releases/download/v2.9.3-hotfix/AnymeX-Linux.AppImage
-	b2sums = SKIP
+	noextract = AnymeX-2.9.3_hotfix.AppImage
+	source = AnymeX-2.9.3_hotfix.AppImage::https://github.com/RyanYuuki/AnymeX/releases/download/v2.9.3-hotfix/AnymeX-Linux.AppImage
+	sha256sums = a177b936d7a061c2acf64caff40402b258ee4af277ab3b1e3f34bc2eac6f1f88
 
-pkgname = anymex
+pkgname = anymex-bin

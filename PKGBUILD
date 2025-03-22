@@ -1,7 +1,7 @@
 # Based off of: https://daveparrish.net/posts/2019-11-16-Better-AppImage-PKGBUILD-template.html
 # Maintainer: jullanggit <jullanggit@proton.me>
 
-pkgname=anymex
+pkgname=anymex-bin
 _PkgName=AnymeX # capitalised name
 pkgver=2.9.3_hotfix
 pkgrel=4
@@ -27,12 +27,11 @@ depends=(
   'gtk3'
   'at-spi2-core'
 )
-provides=("$pkgname=$pkgver")
 conflicts=(anymex)
-_appimage=$_PkgName.AppImage
+_appimage="$_PkgName-$pkgver.AppImage"
 source=($_appimage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage)
 noextract=($_appimage)
-b2sums=('SKIP')
+sha256sums=('a177b936d7a061c2acf64caff40402b258ee4af277ab3b1e3f34bc2eac6f1f88')
 
 prepare() {
   chmod +x $_appimage
