@@ -5,7 +5,7 @@ pkgname=anymex-bin
 _pkgname=anymex
 _PkgName=AnymeX # capitalised name
 pkgver=2.9.3_hotfix
-pkgrel=6
+pkgrel=7
 arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
@@ -49,12 +49,12 @@ build() {
 }
 
 package() {
-  # license
-  install -Dm644 "$srcdir/LICENSE-$pkgver.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
-
   # application
   install -dm755 "$pkgdir/usr/"
-  mv "$srcdir"/squashfs-root/usr/* "$pkgdir/usr/"
+  mv "$srcdir"/squashfs-root/usr/* "$pkgdir/usr/" # cp -a for some reason messes up directory permissions
+
+  # license
+  install -Dm644 "$srcdir/LICENSE-$pkgver.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
 
   # Desktop file
   install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$_pkgname.desktop" <<EOF
