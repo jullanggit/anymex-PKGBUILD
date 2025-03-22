@@ -4,7 +4,7 @@
 pkgname=anymex
 _PkgName=AnymeX # capitalised name
 pkgver=2.9.3_hotfix
-pkgrel=2
+pkgrel=3
 arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
@@ -48,7 +48,7 @@ EOF
   cp -a "$srcdir/squashfs-root/usr/share/icons" "$pkgdir/usr/share/"
 
   # wrapper script
-  install -Dm644 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<EOF
+  install -Dm755 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<EOF
 #!/bin/sh
 export LD_LIBRARY_PATH="/usr/lib/$pkgname:${LD_LIBRARY_PATH}"
 exec /usr/lib/$pkgname/$pkgname.bin "$@"
