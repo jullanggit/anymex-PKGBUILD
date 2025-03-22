@@ -49,10 +49,10 @@ EOF
   cp -a "$srcdir/squashfs-root/usr/share/icons" "$pkgdir/usr/share/"
 
   # wrapper script
-  install -Dm755 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<EOF
+  install -Dm755 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<'EOF'
 #!/bin/sh
-export LD_LIBRARY_PATH="/usr/lib/$pkgname:${LD_LIBRARY_PATH}"
-exec /usr/bin/$pkgname.bin "$@"
+export LD_LIBRARY_PATH="/usr/lib/anymex:${LD_LIBRARY_PATH}"
+exec /usr/bin/anymex.bin "$@"
 EOF
 
   # actual binary
