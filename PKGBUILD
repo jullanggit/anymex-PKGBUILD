@@ -18,7 +18,7 @@ b2sums=('SKIP')
 
 prepare() {
   chmod +x $_appimage
-  ./$_appimage --appimage-extract
+  ./$_appimage --appimage-extract >/dev/null
 }
 
 build() {
@@ -51,7 +51,7 @@ EOF
   install -Dm755 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<EOF
 #!/bin/sh
 export LD_LIBRARY_PATH="/usr/lib/$pkgname:${LD_LIBRARY_PATH}"
-exec /usr/lib/$pkgname/$pkgname.bin "$@"
+exec /usr/bin/$pkgname.bin "$@"
 EOF
 
   # actual binary
