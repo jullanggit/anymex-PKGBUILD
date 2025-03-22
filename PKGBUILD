@@ -2,6 +2,7 @@
 # Maintainer: jullanggit <jullanggit@proton.me>
 
 pkgname=anymex-bin
+_pkgname=anymex
 _PkgName=AnymeX # capitalised name
 pkgver=2.9.3_hotfix
 pkgrel=4
@@ -50,18 +51,18 @@ package() {
   mv "$srcdir"/squashfs-root/usr/* "$pkgdir/usr/"
 
   # Desktop file
-  install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$pkgname.desktop" <<EOF
+  install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$_pkgname.desktop" <<EOF
 [Desktop Entry]
 Version=$pkgver
 Type=Application
 Name=$_PkgName
 GenericName=$_PkgName
 Comment=$pkgdesc
-Exec=$pkgname
-Icon=$pkgname
+Exec=$_pkgname
+Icon=$_pkgname
 Terminal=false
 Categories=Utility;Application;
-Keywords=$pkgname;anime
+Keywords=$_pkgname;anime
 StartupNotify=true
 EOF
 
