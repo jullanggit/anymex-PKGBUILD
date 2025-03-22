@@ -1,3 +1,3 @@
-An arch PKGBUILD for [anymex](https://github.com/RyanYuuki/AnymeX)
+An arch PKGBUILD for the prebuilt binary of  [anymex](https://github.com/RyanYuuki/AnymeX)
 
-To install, run `makepkg -sic`
+Can be found [on the AUR](https://aur.archlinux.org/packages/anymex-bin)
