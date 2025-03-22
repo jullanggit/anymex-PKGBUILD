@@ -28,8 +28,20 @@ build() {
 
 package() {
   # Desktop file
-  install -Dm644 "$srcdir/squashfs-root/$pkgname.desktop" \
-    "$pkgdir/usr/share/applications/$pkgname.desktop"
+  install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$pkgname.desktop" <<EOF
+[Desktop Entry]
+Version=$pkgver
+Type=Application
+Name=$_PkgName
+GenericName=$_PkgName
+Comment=$pkgdesc
+Exec=$pkgname
+Icon=$pkgname
+Terminal=false
+Categories=Utility;Application;
+Keywords=$pkgname;anime
+StartupNotify=true
+EOF
 
   # Icon images
   mkdir -p "$pkgdir/usr/share/"
