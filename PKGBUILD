@@ -4,12 +4,29 @@
 pkgname=anymex
 _PkgName=AnymeX # capitalised name
 pkgver=2.9.3_hotfix
-pkgrel=3
+pkgrel=4
 arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
 license=(MIT)
-depends=(mpv) # not sure if that's all
+depends=(
+  'libepoxy'
+  'gdk-pixbuf2'
+  'pango'
+  'webkit2gtk-4.1'
+  'harfbuzz'
+  'libsoup3'
+  'glibc'
+  'fontconfig'
+  'cairo'
+  'hicolor-icon-theme'
+  'glib2'
+  'gcc-libs'
+  'mpv'
+  'zlib-ng-compat'
+  'gtk3'
+  'at-spi2-core'
+)
 provides=("$pkgname=$pkgver")
 conflicts=(anymex)
 _appimage=$_PkgName.AppImage
@@ -25,9 +42,14 @@ prepare() {
 build() {
   # Fix permissions; .AppImage permissions are 700 for all directories
   chmod -R a-x+rX squashfs-root/usr
+
+  chmod +x squashfs-root/usr/bin/anymex
 }
 
 package() {
+  install -dm755 "$pkgdir/usr/"
+  mv "$srcdir"/squashfs-root/usr/* "$pkgdir/usr/"
+
   # Desktop file
   install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$pkgname.desktop" <<EOF
 [Desktop Entry]
@@ -44,25 +66,4 @@ Keywords=$pkgname;anime
 StartupNotify=true
 EOF
 
-  # Icon images
-  install -dm755 "$pkgdir/usr/share/"
-  cp -a "$srcdir/squashfs-root/usr/share/icons" "$pkgdir/usr/share/"
-
-  # wrapper script
-  install -Dm755 /dev/stdin "$pkgdir/usr/bin/$pkgname" <<'EOF'
-#!/bin/sh
-export LD_LIBRARY_PATH="/usr/lib/anymex:${LD_LIBRARY_PATH}"
-exec /usr/bin/anymex.bin "$@"
-EOF
-
-  # actual binary
-  install -Dm755 "$srcdir/squashfs-root/usr/bin/anymex" "$pkgdir/usr/bin/$pkgname.bin"
-
-  # data
-  install -dm755 "$pkgdir/usr/bin/data/"
-  mv $srcdir/squashfs-root/usr/bin/data/* "$pkgdir/usr/bin/data/" # using /usr/share/anymex doesnt work
-
-  # lib
-  install -dm755 "$pkgdir/usr/bin/lib/"
-  mv $srcdir/squashfs-root/usr/bin/lib/* "$pkgdir/usr/bin/lib/" # using /usr/lib/anymex doesnt work
 }
