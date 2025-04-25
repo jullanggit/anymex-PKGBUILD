@@ -1,15 +1,16 @@
 # Based off of: https://daveparrish.net/posts/2019-11-16-Better-AppImage-PKGBUILD-template.html
 # Maintainer: jullanggit <jullanggit@proton.me>
 
-pkgname=anymex-bin
 _pkgname=anymex
 _PkgName=AnymeX # capitalised name
+pkgname=$_pkgname-bin
 pkgver=2.9.3_hotfix
 pkgrel=7
 arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
 license=(MIT)
+provides=($_pkgname=$pkgver)
 depends=(
   'libepoxy'
   'gdk-pixbuf2'
