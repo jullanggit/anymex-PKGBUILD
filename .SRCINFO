@@ -21,6 +21,7 @@ pkgbase = anymex-bin
 	depends = zlib-ng-compat
 	depends = gtk3
 	depends = at-spi2-core
+	provides = anymex=2.9.3_hotfix
 	conflicts = anymex
 	noextract = AnymeX-2.9.3_hotfix.AppImage
 	source = AnymeX-2.9.3_hotfix.AppImage::https://github.com/RyanYuuki/AnymeX/releases/download/v2.9.3-hotfix/AnymeX-Linux.AppImage
