@@ -73,7 +73,7 @@ jobs:
 
       # 7. Setup AUR SSH key and add remote
       - name: Setup SSH and add AUR remote
-        uses: webfactory/ssh-agent@v0.8.1
+        uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
       - name: Add AUR remote
