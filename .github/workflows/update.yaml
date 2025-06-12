@@ -59,7 +59,7 @@ jobs:
           updpkgsums
           useradd makepkg-user
           chown -R makepkg-user:makepkg-user .
-          su makepkg-user -s /bin/bash -c 'cd pkg && makepkg --printsrcinfo > .SRCINFO'
+          su makepkg-user -s /bin/bash -c 'cd pkg && pwd && whoami && ls && makepkg --printsrcinfo > .SRCINFO'
 
       # 6. Commit changes (if any)
       - name: Commit bump
