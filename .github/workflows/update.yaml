@@ -57,9 +57,9 @@ jobs:
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
           updpkgsums
-          chmod a+rwx -R .
           useradd makepkg-user
-          su makepkg-user -s /bin/bash -c 'cd ~/pkg && makepkg --printsrcinfo > .SRCINFO'
+          chown -R makepkg-user:makepkg-user .
+          su makepkg-user -s /bin/bash -c 'cd pkg && makepkg --printsrcinfo > .SRCINFO'
 
       # 6. Commit changes (if any)
       - name: Commit bump
