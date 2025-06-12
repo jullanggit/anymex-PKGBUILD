@@ -57,7 +57,8 @@ jobs:
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
           updpkgsums
-          makepkg --printsrcinfo > .SRCINFO
+          # avoid being flagged as root by makepkg
+          EUID=1000 makepkg --printsrcinfo > .SRCINFO
 
       # 6. Commit changes (if any)
       - name: Commit bump
