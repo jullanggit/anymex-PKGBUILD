@@ -58,7 +58,8 @@ jobs:
           # recompute checksums & write .SRCINFO
           updpkgsums
           # avoid being flagged as root by makepkg
-          EUID=1000 makepkg --printsrcinfo > .SRCINFO
+          useradd -m builduser
+          sudo -u builduser makepkg --printsrcinfo > .SRCINFO
 
       # 6. Commit changes (if any)
       - name: Commit bump
