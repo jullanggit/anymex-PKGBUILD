@@ -57,21 +57,17 @@ jobs:
           sed -i "s/^pkgver=.*/pkgver=${ver}/" PKGBUILD
           # reset pkgrel
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
-          # recompute checksums & write .SRCINFO
-          # create non-root user and home (only once, uid/gid 1000 is fine)
+
+          # create non-root user
           useradd -m makepkg-user
-          # move the entire pkg workspace into their homedir
-          cp -r . /home/makepkg-user/pkg
-          chown -R makepkg-user:makepkg-user /home/makepkg-user/pkg
-          # run both updpkgsums and makepkg as that non-root user
+          chown -R makepkg-user:makepkg-user .
+
+          # run updpkgsums and makepkg as that user in-place
           su - makepkg-user -s /bin/bash -c '
-            cd ~/pkg
+            cd ${GITHUB_WORKSPACE}/pkg
             updpkgsums
             makepkg --printsrcinfo > .SRCINFO
           '
-          # copy the updated .SRCINFO back into the repo
-          cp /home/makepkg-user/pkg/.SRCINFO .
-
       # 6. Commit changes (if any)
       - name: Commit bump
         run: |
