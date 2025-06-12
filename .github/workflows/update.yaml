@@ -22,7 +22,15 @@ jobs:
           persist-credentials: true
           path: pkg
 
-      # 2. Checkout upstream source to detect new version
+      # 2. Install Arch tools
+      - name: Install Arch tooling
+        run: |
+          pacman -Sy --noconfirm \
+            git \
+            base-devel \
+            pacman-contrib
+
+      # 3. Checkout upstream source to detect new version
       - name: Checkout upstream repo
         uses: actions/checkout@v4
         with:
@@ -30,7 +38,7 @@ jobs:
           path: upstream
           fetch-depth: 0
 
-      # 3. Determine latest upstream tag (assumes tags of form vX.Y.Z)
+      # 4. Determine latest upstream tag (assumes tags of form vX.Y.Z)
       - name: Get latest upstream version
         id: ver
         run: |
@@ -39,7 +47,7 @@ jobs:
           echo "Upstream tag: $latest"
           echo "::set-output name=pkgver::${latest#v}"
 
-      # 4. Bump PKGBUILD & regenerate .SRCINFO
+      # 5. Bump PKGBUILD & regenerate .SRCINFO
       - name: Update PKGBUILD & .SRCINFO
         run: |
           cd pkg
@@ -48,11 +56,10 @@ jobs:
           # reset pkgrel
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
-          sudo pacman -Sy --noconfirm pacman-contrib
           updpkgsums
           makepkg --printsrcinfo > .SRCINFO
 
-      # 5. Commit changes (if any)
+      # 6. Commit changes (if any)
       - name: Commit bump
         run: |
           cd pkg
@@ -65,13 +72,13 @@ jobs:
           fi
           git commit -m "ci: bump to ${{ steps.ver.outputs.pkgver }}"
 
-      # 6. Push to GitHub origin
+      # 7. Push to GitHub origin
       - name: Push to GitHub
         run: |
           cd pkg
           git push
 
-      # 7. Setup AUR SSH key and add remote
+      # 8. Setup AUR SSH key and add remote
       - name: Setup SSH and add AUR remote
         uses: webfactory/ssh-agent@v0.9.1
         with:
@@ -81,7 +88,7 @@ jobs:
           cd pkg
           git remote add aur ssh://aur@aur.archlinux.org/anymex-bin.git
 
-      # 8. Push the same commit to AUR
+      # 9. Push the same commit to AUR
       - name: Push to AUR
         run: |
           cd pkg
