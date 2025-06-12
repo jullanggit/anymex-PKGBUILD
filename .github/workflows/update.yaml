@@ -56,15 +56,18 @@ jobs:
           # reset pkgrel
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
-          updpkgsums
-          # create non-root user and home
+          # create non-root user and home (only once, uid/gid 1000 is fine)
           useradd -m makepkg-user
-          # move repo into user's home so su login shell lands correctly
+          # move the entire pkg workspace into their homedir
           cp -r . /home/makepkg-user/pkg
           chown -R makepkg-user:makepkg-user /home/makepkg-user/pkg
-          # run makepkg as *real* non-root user from their home
-          su - makepkg-user -s /bin/bash -c 'cd ~/pkg && makepkg --printsrcinfo > .SRCINFO'
-          # copy the updated .SRCINFO back
+          # run both updpkgsums and makepkg as that non-root user
+          su - makepkg-user -s /bin/bash -c '
+            cd ~/pkg
+            updpkgsums
+            makepkg --printsrcinfo > .SRCINFO
+          '
+          # copy the updated .SRCINFO back into the repo
           cp /home/makepkg-user/pkg/.SRCINFO .
 
       # 6. Commit changes (if any)
