@@ -57,9 +57,11 @@ jobs:
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
           updpkgsums
-          # avoid being flagged as root by makepkg
           useradd -m builduser
-          sudo -u builduser makepkg --printsrcinfo > .SRCINFO
+          # give builduser ownership of the working tree
+          chown -R builduser:builduser .
+          # actually switch into builduser’s login shell before running makepkg:
+          su - builduser -s /bin/bash -c 'cd ~/pkg && makepkg --printsrcinfo > .SRCINFO'
 
       # 6. Commit changes (if any)
       - name: Commit bump
