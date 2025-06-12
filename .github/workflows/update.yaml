@@ -57,11 +57,9 @@ jobs:
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
           updpkgsums
-          useradd -m builduser
-          # give builduser ownership of the working tree
-          chown -R builduser:builduser .
-          # actually switch into builduser’s login shell before running makepkg:
-          su - builduser -s /bin/bash -c 'cd ~/pkg && makepkg --printsrcinfo > .SRCINFO'
+          chmod a+rwx -R .
+          useradd makepkg-user
+          su makepkg-user -s /bin/bash -c 'cd ~/pkg && makepkg --printsrcinfo > .SRCINFO'
 
       # 6. Commit changes (if any)
       - name: Commit bump
