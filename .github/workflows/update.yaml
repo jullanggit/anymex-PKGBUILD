@@ -52,7 +52,9 @@ jobs:
         run: |
           cd pkg
           # bump pkgver
-          sed -i "s/^pkgver=.*/pkgver=${{ steps.ver.outputs.pkgver }}/" PKGBUILD
+          ver="${{ steps.ver.outputs.pkgver }}"
+          ver="${ver//-/_}"
+          sed -i "s/^pkgver=.*/pkgver=${ver}/" PKGBUILD
           # reset pkgrel
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
