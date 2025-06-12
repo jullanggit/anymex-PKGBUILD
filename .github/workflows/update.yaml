@@ -57,9 +57,15 @@ jobs:
           sed -i 's/^pkgrel=.*/pkgrel=1/' PKGBUILD
           # recompute checksums & write .SRCINFO
           updpkgsums
-          useradd makepkg-user
-          chown -R makepkg-user:makepkg-user .
-          su makepkg-user -s /bin/bash -c 'cd pkg && pwd && whoami && ls && makepkg --printsrcinfo > .SRCINFO'
+          # create non-root user and home
+          useradd -m makepkg-user
+          # move repo into user's home so su login shell lands correctly
+          cp -r . /home/makepkg-user/pkg
+          chown -R makepkg-user:makepkg-user /home/makepkg-user/pkg
+          # run makepkg as *real* non-root user from their home
+          su - makepkg-user -s /bin/bash -c 'cd ~/pkg && makepkg --printsrcinfo > .SRCINFO'
+          # copy the updated .SRCINFO back
+          cp /home/makepkg-user/pkg/.SRCINFO .
 
       # 6. Commit changes (if any)
       - name: Commit bump
