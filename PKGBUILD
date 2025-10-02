@@ -4,8 +4,8 @@
 _pkgname=anymex
 _PkgName=AnymeX # capitalised name
 pkgname=$_pkgname-bin
-pkgver=2.9.3_hotfix
-pkgrel=8
+pkgver=3.0.1_hotfix
+pkgrel=1
 arch=(x86_64) # not sure if arm is also supported on linux
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
 url="https://github.com/RyanYuuki/$_PkgName"
@@ -34,8 +34,8 @@ _appimage="$_PkgName-$pkgver.AppImage"
 source=("$_appimage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage"
   "LICENSE-$pkgver.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/tags/v${pkgver//_/-}/LICENSE.md")
 noextract=($_appimage)
-sha256sums=('a177b936d7a061c2acf64caff40402b258ee4af277ab3b1e3f34bc2eac6f1f88'
-  '20e150fbf9ff46e419434750d9034d40e4fe6a1a5dac37aaf8541dca69c2e02f')
+sha256sums=('9560dadcac9027f71b44a5dd084a0d5f5ecfc67091f3a47c6137ac12f8611843'
+            '20e150fbf9ff46e419434750d9034d40e4fe6a1a5dac37aaf8541dca69c2e02f')
 
 prepare() {
   chmod +x $_appimage
