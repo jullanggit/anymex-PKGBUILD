@@ -1,76 +1,48 @@
-# Based off of: https://daveparrish.net/posts/2019-11-16-Better-AppImage-PKGBUILD-template.html
 # Maintainer: jullanggit <jullanggit@proton.me>
-
 _pkgname=anymex
-_PkgName=AnymeX # capitalised name
-pkgname=$_pkgname-bin
-pkgver=3.0.2_hotfix
+_PkgName=AnymeX
+pkgname=${_pkgname}-bin
+pkgver=test_v1.0.0
 pkgrel=1
-arch=(x86_64) # not sure if arm is also supported on linux
+arch=(x86_64)
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
-url="https://github.com/RyanYuuki/$_PkgName"
+url="https://github.com/RyanYuuki/${_PkgName}"
 license=(MIT)
-provides=($_pkgname=$pkgver)
-depends=(
-  'libepoxy'
-  'gdk-pixbuf2'
-  'pango'
-  'webkit2gtk-4.1'
-  'harfbuzz'
-  'libsoup3'
-  'glibc'
-  'fontconfig'
-  'cairo'
-  'hicolor-icon-theme'
-  'glib2'
-  'gcc-libs'
-  'mpv'
-  'zlib-ng-compat'
-  'gtk3'
-  'at-spi2-core'
-)
+provides=(${_pkgname}=${pkgver})
+depends=('libepoxy' 'gdk-pixbuf2' 'pango' 'webkit2gtk-4.1' 'harfbuzz' 'libsoup3' 'glibc' 'fontconfig' 'cairo' 'hicolor-icon-theme' 'glib2' 'gcc-libs' 'mpv' 'zlib-ng-compat' 'gtk3' 'at-spi2-core')
 conflicts=(anymex)
-_appimage="$_PkgName-$pkgver.AppImage"
-source=("$_appimage::$url/releases/download/v${pkgver//_/-}/$_PkgName-Linux.AppImage"
-  "LICENSE-$pkgver.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/tags/v${pkgver//_/-}/LICENSE.md")
-noextract=($_appimage)
-sha256sums=('ca0e95e06f79281c1f6d39fea8ecda23d229f8b6b9aa4395bcbcb08b47de7b2a'
-            '20e150fbf9ff46e419434750d9034d40e4fe6a1a5dac37aaf8541dca69c2e02f')
+_appimage="${_PkgName}-${pkgver}.AppImage"
+source=("${_appimage}::${url}/releases/download/test-v1.0.0/${_PkgName}-Linux.AppImage"
+        "LICENSE-${pkgver}.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/tags/test-v1.0.0/LICENSE.md")
+noextract=(${_appimage})
+sha256sums=('63e8132ce22294e89168465f2d823297be0b200aec3bfea7c602835713d1e351' 'SKIP')
 
 prepare() {
-  chmod +x $_appimage
-  ./$_appimage --appimage-extract >/dev/null
+    chmod +x "${_appimage}"
+    ./"${_appimage}" --appimage-extract >/dev/null
 }
 
 build() {
-  # Fix permissions; .AppImage permissions are 700 for all directories
-  chmod -R a-x+rX squashfs-root/usr
-
-  chmod +x squashfs-root/usr/bin/anymex
+    chmod -R a-x+rX squashfs-root/usr
+    chmod +x squashfs-root/usr/bin/anymex
 }
 
 package() {
-  # application
-  install -dm755 "$pkgdir/usr/"
-  mv "$srcdir"/squashfs-root/usr/* "$pkgdir/usr/" # cp -a for some reason messes up directory permissions
-
-  # license
-  install -Dm644 "$srcdir/LICENSE-$pkgver.md" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
-
-  # Desktop file
-  install -Dm644 /dev/stdin "$pkgdir/usr/share/applications/$_pkgname.desktop" <<EOF
+    install -dm755 "${pkgdir}/usr/"
+    mv "${srcdir}"/squashfs-root/usr/* "${pkgdir}/usr/"
+    install -Dm644 "${srcdir}/LICENSE-${pkgver}.md" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.md"
+    install -Dm644 /dev/stdin "${pkgdir}/usr/share/applications/${_pkgname}.desktop" <<DESKTOP
 [Desktop Entry]
-Version=$pkgver
+Version=${pkgver}
 Type=Application
-Name=$_PkgName
-GenericName=$_PkgName
-Comment=$pkgdesc
-Exec=$_pkgname
-Icon=$_pkgname
+Name=${_PkgName}
+GenericName=${_PkgName}
+Comment=${pkgdesc}
+Exec=${_pkgname}
+Icon=${_pkgname}
 Terminal=false
 Categories=Utility;Application;
-Keywords=$_pkgname;anime
+Keywords=${_pkgname};anime
 StartupNotify=true
-EOF
-
+DESKTOP
 }
