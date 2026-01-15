@@ -26,7 +26,7 @@ pkgbase = anymex-bin
   noextract = AnymeX-2.0.1.AppImage
   source = AnymeX-2.0.1.AppImage::https://github.com/RyanYuuki/AnymeX/releases/download/v2.0.1/AnymeX-Linux.AppImage
   source = LICENSE-2.0.1.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/tags/v2.0.1/LICENSE.md
-  sha256sums = 2474bedc9591a047a024921c817a26ce49f605b7ecf32dfe488819f30236fe86
+  sha256sums = 66e2080070c59ede6d3a1a19cefb34f3b2597f091b0ce1464e924cd60b8a4071
   sha256sums = SKIP
 
 pkgname = anymex-bin
