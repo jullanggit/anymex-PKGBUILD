@@ -2,7 +2,7 @@
 _pkgname=anymex
 _PkgName=AnymeX
 pkgname=${_pkgname}-bin
-pkgver=2.0.4
+pkgver=1.1.0
 pkgrel=1
 arch=(x86_64)
 pkgdesc='An Open Source app for Tracking Multi Service (AL, MAL, SIMKL)'
@@ -12,10 +12,10 @@ provides=(${_pkgname}=${pkgver})
 depends=('libepoxy' 'gdk-pixbuf2' 'pango' 'webkit2gtk-4.1' 'harfbuzz' 'libsoup3' 'glibc' 'fontconfig' 'cairo' 'hicolor-icon-theme' 'glib2' 'gcc-libs' 'mpv' 'zlib-ng-compat' 'gtk3' 'at-spi2-core')
 conflicts=(anymex)
 _appimage="${_PkgName}-${pkgver}.AppImage"
-source=("${_appimage}::${url}/releases/download/v2.0.4/${_PkgName}-Linux.AppImage"
-        "LICENSE-${pkgver}.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/tags/v2.0.4/LICENSE.md")
+source=("${_appimage}::${url}/releases/download/v1.1.0/${_PkgName}-Linux.AppImage"
+        "LICENSE-${pkgver}.md::https://raw.githubusercontent.com/RyanYuuki/AnymeX/refs/tags/v1.1.0/LICENSE.md")
 noextract=(${_appimage})
-sha256sums=('aafe702c379322866464425617fcf1c01835d89deb6f2aca4a3e6e6e6f5eeeab' 'SKIP')
+sha256sums=('97e079e7dd35ba578f39761cd52e664db87ced307d9199c001d119398b98a4fd' 'SKIP')
 
 prepare() {
     chmod +x "${_appimage}"
